@@ -1,10 +1,14 @@
 const mongoose=require('mongoose');
 const Register=mongoose.model('Register',{
     username:{
-        type:String
+        type:String,
+        required:true,
+        unique:true
     },
     password:{
-        type:String
+        type:String,
+        required:true,
+        unique:true
     },
     address:{
         type:String
