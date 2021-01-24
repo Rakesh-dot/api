@@ -7,14 +7,14 @@ const Register=mongoose.model('Register',{
     },
     password:{
         type:String,
-        required:true,
-        unique:true
+        required:true
     },
     address:{
         type:String
     },
     email:{
-        type:String
+        type:String,
+        required:true
     },
     age:{
         type:String
