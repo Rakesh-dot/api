@@ -5,6 +5,7 @@ const Register=require('../models/register_model');
 const router=express.Router();
 const{check,validationResult}=require('express-validator');
 const bcryptjs=require('bcryptjs');
+const jwt=require('jsonwebtoken');
 
 
 router.post('/register',[
@@ -54,10 +55,16 @@ router.get('/user/login',function(req,res){
             if(result===false){
                 return res.status(403).json({message:"invalid details!!"})
             }
-            res.send("correct details!!")
+            const token=jwt.sign({userId:customerData._ID},'secretkey')
+            res.status(200).json({
+                token:token,
+                message:"auth sucess!!",
+            })
         })
     })
-    .catch()
+    .catch(function(e){
+        res.status(500).json({error:e});
+    })
 })
 
 module.exports=router;
