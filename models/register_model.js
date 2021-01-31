@@ -21,6 +21,11 @@ const Register=mongoose.model('Register',{
     },
     phonenumber:{
         type:String
+    },
+    userType:{
+        type:String,
+        enum:['Admin','Customer'],
+        default:'Customer'
     }
 })
 module.exports=Register;
