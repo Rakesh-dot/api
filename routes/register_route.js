@@ -23,7 +23,7 @@ router.post('/register',[
         const email=req.body.email;
         const age=req.body.age;
         const phonenumber=req.body.phonenumber;
-        bcryptjs.hash(password,10,function(err,hash_passwrd){
+        bcryptjs.hash(password,10,function(err,hash_password){
             const data=new Register({username:username,password:hash_passwrd,address:address,email:email,age:age,phonenumber:phonenumber})
             data.save().then(function(result){
                 res.status(201).json({message:"Registered!!"})
@@ -55,7 +55,7 @@ router.get('/user/login',function(req,res){
             if(result===false){
                 return res.status(403).json({message:"invalid details!!"})
             }
-            const token=jwt.sign({userId:customerData._ID},'secretkey')
+            const token=jwt.sign({userId:customerData._id},'secretkey')
             res.status(200).json({
                 token:token,
                 message:"auth sucess!!",
