@@ -5,7 +5,7 @@ const Proteins=require('../models/proteinModel');
 const auth=require('../middleware/auth');
 
 
-router.post('/proteins/insert',auth.verifyUser,function(req,res){
+router.post('/proteins/insert',auth.verifyUser,auth.verifyAdmin,function(req,res){
     const ptitle=req.body.ptitle;
     const pimage=req.body.pimage;
     const pdesc=req.body.pdesc;
