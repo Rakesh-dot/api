@@ -3,15 +3,23 @@ const express=require('express');
 const router=express.Router();
 const Proteins=require('../models/proteinModel');
 const auth=require('../middleware/auth');
+const upload = require('../middleware/upload');
 
+//insert paxi ko :,auth.verifyUser,auth.verifyAdmin
+router.post('/proteins/insert',auth.verifyUser,auth.verifyAdmin,upload.single('pimage'),function(req,res){
+    if(req.file==undefined){
+        return res.status(400).json({
+            message:"Only jpg,jpeg,png,gif files are allowed"
+        })
+    }
 
-router.post('/proteins/insert',auth.verifyUser,auth.verifyAdmin,function(req,res){
     const ptitle=req.body.ptitle;
-    const pimage=req.body.pimage;
     const pdesc=req.body.pdesc;
     const pcategory=req.body.pcategory;
+    const pimage=req.file.path;
 
-    const pdata=new Proteins({ptitle:ptitle,pimage:pimage,pdesc:pdesc,pcategory:pcategory});
+
+    const pdata=new Proteins({ptitle:ptitle,pdesc:pdesc,pcategory:pcategory,pimage:pimage});
     pdata.save()
     .then(function(result){
         res.status(201).json({message:"Protein created!!"})
@@ -22,10 +30,10 @@ router.post('/proteins/insert',auth.verifyUser,auth.verifyAdmin,function(req,res
 })
 
 router.put("/proteins/update",auth.verifyAdmin,function(req,res){
-    const ntitle=req.body.ntitle;
-    const ndesc=req.body.ndesc;
-    const ncategory=req.body.ncategory;
-    const nimage=req.body.nimage;
+    const ptitle=req.body.ntitle;
+    const pdesc=req.body.ndesc;
+    const pcategory=req.body.ncategory;
+    const pimage=req.file.nimage;
     const id=req.body.nid;
 
 
