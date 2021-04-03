@@ -12,6 +12,7 @@ router.post('/proteins/insert',auth.verifyUser,upload.single('pimage'),function(
             message:"Only jpg,jpeg,png,gif files are allowed"
         })
     }
+    
 
     const ptitle=req.body.ptitle;
     const pdesc=req.body.pdesc;
