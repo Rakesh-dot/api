@@ -12,7 +12,7 @@ const Proteins=mongoose.model("Proteins",{
     pdesc:{
         type:String
     },
-    pcategory:{
+    pprice:{
         type:String,
         required:true
     }

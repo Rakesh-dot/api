@@ -9,18 +9,9 @@ const Register=mongoose.model('Register',{
         type:String,
         required:true
     },
-    address:{
-        type:String
-    },
     email:{
         type:String,
         required:true
-    },
-    age:{
-        type:String
-    },
-    phonenumber:{
-        type:String
     },
     userType:{
         type:String,

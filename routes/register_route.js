@@ -19,12 +19,9 @@ router.post('/register',[
    {
         const username=req.body.username;
         const password=req.body.password;
-        const address=req.body.address;
         const email=req.body.email;
-        const age=req.body.age;
-        const phonenumber=req.body.phonenumber;
         bcryptjs.hash(password,10,function(err,hash_password){
-            const data=new Register({username:username,password:hash_passwrd,address:address,email:email,age:age,phonenumber:phonenumber})
+            const data=new Register({username:username,password:hash_password,email:email})
             data.save().then(function(result){
                 res.status(201).json({message:"Registered!!"})
             }).catch(function(err1){
@@ -40,7 +37,7 @@ router.post('/register',[
 })
 
 
-router.get('/user/login',function(req,res){
+router.post('/user/login',function(req,res){
     const email=req.body.email;
     const password=req.body.password;
 
@@ -58,7 +55,7 @@ router.get('/user/login',function(req,res){
             const token=jwt.sign({userId:customerData._id},'secretkey')
             res.status(200).json({
                 token:token,
-                message:"auth sucess!!",
+                message:"auth sucess!!",usertype:customerData.userType
             })
         })
     })

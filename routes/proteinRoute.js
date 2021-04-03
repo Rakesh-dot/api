@@ -6,7 +6,7 @@ const auth=require('../middleware/auth');
 const upload = require('../middleware/upload');
 
 //insert paxi ko :,auth.verifyUser,auth.verifyAdmin
-router.post('/proteins/insert',auth.verifyUser,auth.verifyAdmin,upload.single('pimage'),function(req,res){
+router.post('/proteins/insert',auth.verifyUser,upload.single('pimage'),function(req,res){
     if(req.file==undefined){
         return res.status(400).json({
             message:"Only jpg,jpeg,png,gif files are allowed"
@@ -15,11 +15,11 @@ router.post('/proteins/insert',auth.verifyUser,auth.verifyAdmin,upload.single('p
 
     const ptitle=req.body.ptitle;
     const pdesc=req.body.pdesc;
-    const pcategory=req.body.pcategory;
-    const pimage=req.file.path;
+    const pprice=req.body.pprice;
+    const pimage=req.file.filename;
 
 
-    const pdata=new Proteins({ptitle:ptitle,pdesc:pdesc,pcategory:pcategory,pimage:pimage});
+    const pdata=new Proteins({ptitle:ptitle,pdesc:pdesc,pprice:pprice,pimage:pimage});
     pdata.save()
     .then(function(result){
         res.status(201).json({message:"Protein created!!"})
@@ -29,15 +29,14 @@ router.post('/proteins/insert',auth.verifyUser,auth.verifyAdmin,upload.single('p
     })
 })
 
-router.put("/proteins/update",auth.verifyAdmin,function(req,res){
-    const ptitle=req.body.ntitle;
-    const pdesc=req.body.ndesc;
-    const pcategory=req.body.ncategory;
-    const pimage=req.file.nimage;
-    const id=req.body.nid;
+router.put("/proteins/update",auth.verifyUser,auth.verifyAdmin,function(req,res){
+    const ntitle=req.body.ptitle;
+    const ndesc=req.body.pdesc;
+    const nprice=req.body.pprice;
+    const id=req.body.Id;
 
 
-    Proteins.updateOne({_id:id}),{ntitle:ntitle,ndesc:ndesc,ncategory:ncategory,nimage:nimage,id:nid}
+    Proteins.updateOne({_id:id},{ptitle:ntitle,pdesc:ndesc,pprice:nprice})
     .then(function(result){
         res.status(200).json({message:"Updated"})
     })
@@ -49,7 +48,7 @@ router.put("/proteins/update",auth.verifyAdmin,function(req,res){
 
 //for delete
 router.delete('/proteins/delete/:id', function(req,res){
-    const id = req.params.customerId
+    const id = req.params.id
     Proteins.deleteOne({_id: id})
     .then(function(result){
         res.status(200).json({status: success})
