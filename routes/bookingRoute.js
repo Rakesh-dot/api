@@ -59,6 +59,16 @@ router.delete('/delete/:id',function(req,res){
     })
 })
 
+router.put('/updateBooking/:bid',verifyUser,function(req,res){
+ 
+    Booking.findOneAndUpdate({_id:req.params.bid},{
+        Qty:req.body.Qty
+    }).then(function(data){
+        res.status(200).json({success:true,message:"Updated"})
+    })
+     
+    })
+
 
  
 module.exports=router;
