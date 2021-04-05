@@ -45,16 +45,16 @@ router.post('/user/login',function(req,res){
     .then(function(customerData){
         if(customerData===null){
             //user not found
-            return res.status(403).json({message:"invalid details!!"})
+            return res.status(403).json({success:false,message:"invalid details!!"})
         }
         //found user
         bcryptjs.compare(password,customerData.password,function(err,result){
             if(result===false){
-                return res.status(403).json({message:"invalid details!!"})
+                return res.status(403).json({success:false,message:"invalid details!!"})
             }
             const token=jwt.sign({userId:customerData._id},'secretkey')
             res.status(200).json({
-                token:token,
+                token:token,success:true,
                 message:"auth sucess!!",usertype:customerData.userType
             })
         })
