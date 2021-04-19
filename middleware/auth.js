@@ -24,7 +24,7 @@ module.exports.verifyUser=function(req,res,next){
         res.status(401).json({error:e})
     }
 }
-//guard for admin
+//guard for the adminUser
 module.exports.verifyAdmin=function(req,res,next){
     console.log(req.userInfo)
     if(!req.userInfo){
