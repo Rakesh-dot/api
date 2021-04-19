@@ -52,7 +52,25 @@ res.status(200).json({data:data,total:total})
 }).catch()
 })
 
-
+router.get('/booking/sho',function(req,res){
+        
+         console.log("jhvjhvj")
+    Booking.find().populate('UserId').populate('ProductId').then(function(data){
+        console.log(data)
+        let total =0
+        data.map((item)=>{
+     
+            let qty = item.Qty
+            let price = item.ProductId.pprice;
+            total += price * qty
+          
+          
+          
+           
+          })
+res.status(200).json({data:data,total:total})
+}).catch()
+})
 router.delete('/delete/:id',function(req,res){
     Booking.findByIdAndDelete({_id:req.params.id}).then(function(result){
         console.log("de;lads")
